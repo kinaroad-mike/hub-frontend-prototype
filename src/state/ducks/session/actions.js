@@ -1,23 +1,19 @@
-import axios from 'axios';
-
 import * as types from './types';
+import { api } from '../../middlewares';
 
 export { login };
 
-function loginAPI (email, password) {
-  return axios.post(`http://localhost:8000/api-token-auth/`, { email, password })
-    .then(user => user);
-}
-
-function login (username, password) {
+function login (email, password) {
   return (dispatch) => {
-    loginAPI(username, password)
+    dispatch(request());
+    api.post('/api-token-auth/', { email, password })
       .then((user) => {
         if (user && user.data.token) {
-          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('authToken', JSON.stringify(user.data.token));
         }
         dispatch(success(user));
       });
   };
+  function request () { return { type: types.LOGIN_REQUEST }; }
   function success (user) { return { type: types.LOGIN_SUCCESS, user }; }
 }

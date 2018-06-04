@@ -4,12 +4,12 @@ export default function (state = {}, action) {
   switch (action.type) {
     case types.LOGIN_REQUEST:
       return {
-        loggingIn: true,
-        user: action.user
+        loggingIn: true
       };
 
     case types.LOGIN_SUCCESS:
       return {
+        loggingIn: false,
         loggedIn: true,
         user: action.user
       };
