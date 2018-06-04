@@ -1,165 +1,136 @@
 import React from 'react';
 import {
-	Button,
-	Dropdown,
-	Form,
-	Icon,
-	Input
+  Dropdown,
+  Form,
+  Input
 } from 'semantic-ui-react';
 
 export const fields = {
-	additionDropdownField,
-	dateInputField,
-	moneyInputField,
-	searchableDropdownField,
-	textInputField
+  additionDropdownField,
+  dateInputField,
+  moneyInputField,
+  searchableDropdownField,
+  textInputField
+};
+
+function additionDropdownField (field) {
+  // Not currently working, need to handle onAddItem!!
+  return (
+    <Form.Field>
+      <Dropdown
+        placeholder="Add or search..."
+        search
+        selection
+        allowAdditions
+        value={field.input.value}
+        onChange={(param, data) => field.input.onChange(data.value)}
+        options={field.options ? field.options : []}
+        loading={field.fetching}
+        onAddItem={field.addItem}
+      />
+    </Form.Field>
+  );
 }
 
-function additionDropdownField(field) {
-	// Not currently working, need to handle onAddItem!!
-	return (
-		<Form.Field>
-			<Dropdown
-				placeholder="Add or search..."
-				search
-				selection
-				allowAdditions
-				value={field.input.value}
-				onChange={(param,data) => field.input.onChange(data.value)}
-				options={field.options ? field.options : []}
-				loading={ field.fetching }
-				onAddItem={field.addItem}
-			/>
-		</Form.Field>
-	)
+function dateInputField (field) {
+  // Temporary solution to render input field as type data
+  // to show datepicker
+  // Props:
+  //    required    bool
+
+  return (
+    <Form.Field>
+      <Input
+        required={field.required ? field.required : false}
+        type="date"
+        value={field.input.value}
+        onChange={(param, data) => field.input.onChange(data.value)}
+      />
+    </Form.Field>
+  );
 }
 
-function dateInputField(field) {
-	// Temporary solution to render input field as type data
-	// to show datepicker
-	// Props:
-	//		required 		bool
+function moneyInputField (field) {
+  // Renders an input field for user to provide dollar amounts to.
+  // When used in conjunction with operatorButtonsField and the
+  // parent component is bound, it's background color will
+  // automatically adjust.
+  // Props:
+  //    placeholder   string
+  //    required    bool
 
-	return (
-		<Form.Field>
-			<Input
-				required={field.required ? field.required : false}
-				type="date"
-				value={field.input.value}
-				onChange={(param,data) => field.input.onChange(data.value)}
-			/>
-		</Form.Field>
-		)
+  let className = '';
+  try {
+    className = field.meta.visited ? `${this.state.operator}-background` : '';
+  } catch (e) {
+    className = '';
+  }
+
+  return (
+    <Form.Field>
+      <Input
+        placeholder={field.placeholder ? field.placeholder : ''}
+        required={field.required ? field.required : false}
+        icon="dollar"
+        iconPosition="left"
+        type="number"
+        step="0.01"
+        value={field.input.value}
+        onChange={(param, data) => field.input.onChange(data.value)}
+        onFocus={() => field.input.onFocus()}
+        onBlur={() => field.input.onBlur()}
+        className={className}
+      />
+    </Form.Field>
+  );
 }
 
-function moneyInputField(field) {
-	// Renders an input field for user to provide dollar amounts to.
-	// When used in conjunction with operatorButtonsField and the
-	// parent component is bound, it's background color will 
-	// automatically adjust.
-	// Props:
-	//		placeholder 	string
-	//		required 		bool
-	
-	var className = '';
-	try {
-		className = field.meta.visited ? `${this.state.operator}-background` : '';
-	} catch(e) {
-		className = '';
-	}
+function textInputField (field) {
+  // Render a simple text input field
+  // Props:
+  //    placeholder   string
+  //    required    bool
+  const { meta: { touched, error } } = field;
+  const className = `field ${touched && error ? 'error' : ''}`;
 
-	return (
-		<Form.Field>
-			<Input
-				placeholder={field.placeholder ? field.placeholder : ""}
-				required={field.required ? field.required : false}
-				icon="dollar"
-				iconPosition="left"
-				type="number"
-				step="0.01"
-				value={field.input.value}
-				onChange={(param,data) => field.input.onChange(data.value)}
-				onFocus={() => field.input.onFocus()}
-				onBlur={() => field.input.onBlur()}
-				className={className}
-			/>
-		</Form.Field>
-	)
+  const placeholderInit = field.placeholder ? field.placeholder : '';
+  const placeholder = (touched && error) ? error : placeholderInit;
+
+  return (
+    <Form.Field>
+      <Input
+        placeholder={placeholder}
+        required={field.required ? field.required : false}
+        value={field.input.value}
+        onChange={(param, data) => field.input.onChange(data.value)}
+        onFocus={() => field.input.onFocus()}
+        onBlur={() => field.input.onBlur()}
+        className={className}
+        type={field.type ? field.type : ''}
+      />
+    </Form.Field>
+  );
 }
 
-function textInputField(field) {
-	// Render a simple text input field
-	// Props:
-	//		placeholder 	string
-	//		required 		bool
-	const { meta: { touched, error } } = field;
-	const className = `field ${touched && error ? 'error' : ''}`
+function searchableDropdownField (field) {
+  // Renders a searchable dropdown field
+  // Props:
+  //    options     {'value', 'text', 'key'}
+  //    placeholder   string
+  //    required    bool
 
-	const placeholder_init = field.placeholder ? field.placeholder : '';
-	const placeholder = (touched && error) ? error : placeholder_init;
-
-	return (
-		<Form.Field>
-			<Input
-				placeholder={placeholder}
-				required={field.required ? field.required : false}
-				value={field.input.value}
-				onChange={(param,data) => field.input.onChange(data.value)}
-				onFocus={() => field.input.onFocus()}
-				onBlur={() => field.input.onBlur()}
-				className={className}
-				type={field.type ? field.type : ''}
-			/>
-		</Form.Field>
-	)
-}
-
-function searchableDropdownField(field) {
-	// Renders a searchable dropdown field
-	// Props:
-	//		options 		{'value', 'text', 'key'}
-	//		placeholder 	string
-	//		required 		bool
-
-	return (
-		<Form.Field>
-			<Dropdown
-				placeholder={field.placeholder ? field.placeholder : ""}
-				required={field.required ? field.required : false}
-				search={true}
-				selection={true}
-				value={field.input.value}
-				onChange={(param,data) => field.input.onChange(data.value)}
-				options={field.options ? field.options : []}
-				loading={!field.options}
-			/>
-		</Form.Field>
-	)
-}
-
-function textInputField(field) {
-	// Render a simple text input field
-	// Props:
-	//		placeholder 	string
-	//		required 		bool
-	const { meta: { touched, error } } = field;
-	const className = `field ${touched && error ? 'error' : ''}`
-
-	const placeholder_init = field.placeholder ? field.placeholder : '';
-	const placeholder = (touched && error) ? error : placeholder_init;
-
-	return (
-		<Form.Field>
-			<Input
-				placeholder={placeholder}
-				required={field.required ? field.required : false}
-				value={field.input.value}
-				onChange={(param,data) => field.input.onChange(data.value)}
-				onFocus={() => field.input.onFocus()}
-				onBlur={() => field.input.onBlur()}
-				className={className}
-				type={field.type ? field.type : ''}
-			/>
-		</Form.Field>
-	)
+  return (
+    <Form.Field>
+      <Dropdown
+        placeholder={field.placeholder ? field.placeholder : ''}
+        required={field.required ? field.required : false}
+        search
+        selection
+        value={field.input.value}
+        onChange={(param, data) => field.input.onChange(data.value)}
+        options={field.options ? field.options : []}
+        loading={!field.options}
+      />
+    </Form.Field>
+  );
 }

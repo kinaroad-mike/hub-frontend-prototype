@@ -1,5 +1,3 @@
-import { login } from "./actions";
+import { login } from './actions';
 
-export {
-    login,
-};
+export { login };

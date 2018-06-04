@@ -1,11 +1,11 @@
-import { Login } from "../views/containers";
+import { Login } from '../views/containers';
 
 const routes = [
-	{
-		path: "/login",
-		component: Login,
-		exact: true
-	}
+  {
+    path: '/login',
+    component: Login,
+    exact: true
+  }
 ];
 
 export default routes;

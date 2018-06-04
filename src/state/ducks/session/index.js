@@ -1,9 +1,7 @@
-import reducer from "./reducers";
+import reducer from './reducers';
 
-import * as sessionOperations from "./operations";
+import * as sessionOperations from './operations';
 
-export {
-    sessionOperations,
-};
+export { sessionOperations };
 
 export default reducer;
