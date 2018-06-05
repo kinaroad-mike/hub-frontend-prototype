@@ -10,5 +10,8 @@
 	"extends": ["airbnb-standard"],
 	"globals": {
 		"localStorage": true
+	},
+	"env": {
+		"jest": true
 	}
 }

@@ -35,7 +35,7 @@ class LoginForm extends Component {
               placeholder="Password"
               component={fields.textInputField}
             />
-            <Button type="submit" fluid inverted color="orange" size="mini">Submit</Button>
+            <Button id="TEST" type="submit" fluid inverted color="orange" size="mini">Submit</Button>
           </form>
         </Grid.Column>
       </Grid.Row>
