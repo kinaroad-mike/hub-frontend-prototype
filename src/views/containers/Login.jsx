@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import { LoginForm } from '../components';
 import { sessionOperations } from '../../state/ducks/session';
 
-// Connect the LoginForm component to redux form
+// Decorate the LoginForm component with redux form
 const LoginFormContainer = reduxForm({
   form: 'LoginForm'
 })(LoginForm);

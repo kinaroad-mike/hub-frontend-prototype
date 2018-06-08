@@ -6,7 +6,7 @@ import { LoginForm } from '../../../src/views/components';
 <LoginForm />
   Contract:
    - It renders a form where the user can enter their login credentials
-   - The user can submit the form by clicking a button
+   - The user can submit the form by clicking the submit button
    - The submitted values are sent to an exernal login() action creator
 
   Constraints worth testing:
@@ -20,7 +20,7 @@ import { LoginForm } from '../../../src/views/components';
 
   Constraints not worth testing:
     - The static styling of the rendered elements
-    - Child components behave as expected
+    - That the child components behave as expected
     - The dispatched login() action creator behaves as expected
 */
 
