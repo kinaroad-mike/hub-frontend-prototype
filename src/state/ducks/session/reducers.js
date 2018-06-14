@@ -11,7 +11,9 @@ export default function (state = {}, action) {
       return {
         loggingIn: false,
         loggedIn: true,
-        user: action.user
+        user: {
+          authToken: action.authToken
+        }
       };
 
     default:

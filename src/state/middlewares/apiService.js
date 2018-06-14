@@ -8,6 +8,15 @@ export const api = {
   post
 };
 
+function authHeaderFromStorage () {
+  if (!localStorage.getItem('authToken')) {
+    return {};
+  }
+  const authHeader = `JWT ${localStorage.getItem('authToken')}`;
+
+  return authHeader;
+}
+
 function get (url = '/', headers = {}) {
   const authHeader = authHeaderFromStorage();
   const headersObject = {
@@ -16,7 +25,6 @@ function get (url = '/', headers = {}) {
       ...headers
     }
   };
-
   return axios.get(`${baseUrl}${url}`, headersObject)
     .then(response => response);
 }
@@ -31,13 +39,4 @@ function post (url = '/', payload, headers = {}) {
   };
   return axios.post(`${baseUrl}${url}`, payload, headersObject)
     .then(response => response);
-}
-
-function authHeaderFromStorage () {
-  if (!localStorage.getItem('authToken')) {
-    return {};
-  }
-  const authHeader = `JWT ${localStorage.getItem('authToken')}`;
-
-  return authHeader;
 }
