@@ -1,0 +1,2 @@
+export const FETCH_ACCOUNTS_REQUEST = 'accounts/ACCOUNT_REQUEST';
+export const FETCH_ACCOUNTS_SUCCESS = 'accounts/ACCOUNT_SUCCESS';
