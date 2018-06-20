@@ -15,7 +15,8 @@ export class LoginForm extends Component {
 
   onSubmit (values) {
     // Dispatch login action with email and password values
-    this.props.login(values.email, values.password);
+    const { authRedirect } = this.props.location.state || { authRedirect: { pathname: '/dashboard' } };
+    this.props.login(values.email, values.password, authRedirect);
   }
 
   render () {
@@ -23,6 +24,13 @@ export class LoginForm extends Component {
     return (
       <Grid.Row centered>
         <Grid.Column width={6} textAlign="center">
+
+          {
+            this.props.location.state &&
+            this.props.location.state.authRedirect &&
+            <p>Unauthorized: Please login to access this page</p>
+          }
+
           <form onSubmit={handleSubmit(this.onSubmit)} className="ui equal width form mini">
             <Field
               name="email"
@@ -48,5 +56,16 @@ LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
 
   // Utilised Redux Form props
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      authRedirect: PropTypes.shape({
+        pathname: PropTypes.string
+      })
+    })
+  })
+};
+
+LoginForm.defaultProps = {
+  location: {}
 };

@@ -29,7 +29,7 @@ const LoginFormContainer = reduxForm({
 // Connect the LoginForm component to our redux store
 function mapDispatchToProps (dispatch) {
   return {
-    login: (username, password) => dispatch(sessionOperations.login(username, password))
+    login: (username, password, authRedirect) => dispatch(sessionOperations.login(username, password, authRedirect))
   };
 }
 
@@ -38,4 +38,5 @@ function mapStateToProps (state) {
     session: state.session
   };
 }
+
 export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginFormContainer);
